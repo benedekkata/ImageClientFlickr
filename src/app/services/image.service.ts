@@ -1,10 +1,9 @@
-import { Image } from './../models/image.type';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
-import { catchError, delay, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   API_FAV_FEED,
   API_PHOTO_FEED,
@@ -26,37 +25,60 @@ export class ImageService {
     this.fimages = this.storageService.loadImages();
   }
 
+  /**
+   * Sends a request for the Flickr Feed API and handels the JSONP response.
+   * @param keyword The value that will be used to filter the images by a keyword.
+   * @param language A value that will be used to filter the images by language.
+   * @returns An observable with the result images.
+   */
   getImagesByKeywordAndLanguage(
     keyword?: string,
     language?: string
-  ): Observable<Object | undefined> {
+  ): Observable<FlickrImage | undefined> {
+    //If the keyword is empty it returns the loaded data from the local storeage.
     if (keyword) {
+      //If the language is not set it will use a constant value (en-us)
       language = language ? language : DEFAULT_LANGUAGE;
       const url = `${API_PHOTO_FEED}tags=${keyword.replaceAll(
         ' ',
         ','
       )}&lang=${language}&jsoncallback=JSONP_CALLBACK`;
-      this.http.jsonp(url, 'callback').pipe(
-        catchError(async (e) => console.log(e)) // then handle the error
+
+      //If the request is not successfull it returns the loaded data from the local storeage.
+      return this.http.jsonp<FlickrImage>(url, 'JSONP_CALLBACK').pipe(
+        catchError((err: HttpErrorResponse) => {
+          return of(this.fimages);
+        })
       );
-      return this.http.jsonp(url, 'JSONP_CALLBACK');
     }
-    return of(this.fimages).pipe(delay(200));
+    return of(this.fimages);
   }
 
-  getImagesByUser(userid: string): Observable<Object | undefined> {
+  /**
+   * Sends a request for the Flickr Feed API and handels the JSONP response.
+   * @param userid The user whose images we want to get.
+   * @returns A set of images for the specified user.
+   */
+  getImagesByUser(userid: string): Observable<FlickrImage | undefined> {
     const url = `${API_PHOTO_FEED}id=${userid}&jsoncallback=JSONP_CALLBACK`;
-    this.http.jsonp(url, 'callback').pipe(
-      catchError(async (e) => console.log(e)) // then handle the error
+    return this.http.jsonp<FlickrImage>(url, 'JSONP_CALLBACK').pipe(
+      catchError((err: HttpErrorResponse) => {
+        return of(undefined);
+      })
     );
-    return this.http.jsonp(url, 'JSONP_CALLBACK');
   }
 
-  getFavouritImages(userid: string): Observable<Object | undefined> {
+  /**
+   * Sends a request for the Flickr Feed API and handels the JSONP response.
+   * @param userid The user whose favourite images we want to get.
+   * @returns The favourite images of the specified user.
+   */
+  getFavouritImages(userid: string): Observable<FlickrImage | undefined> {
     const url = `${API_FAV_FEED}id=${userid}&jsoncallback=JSONP_CALLBACK`;
-    this.http.jsonp(url, 'callback').pipe(
-      catchError(async (e) => console.log(e)) // then handle the error
+    return this.http.jsonp<FlickrImage>(url, 'JSONP_CALLBACK').pipe(
+      catchError((err: HttpErrorResponse) => {
+        return of(undefined);
+      })
     );
-    return this.http.jsonp(url, 'JSONP_CALLBACK');
   }
 }

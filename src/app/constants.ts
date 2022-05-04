@@ -14,3 +14,4 @@ export const POSSIBLE_LANGUAGES: string[] = [
 export const DEFAULT_LANGUAGE: string = 'en-us';
 export const API_FAV_FEED: string =
   'https://www.flickr.com/services/feeds/photos_faves.gne?format=json&';
+export const BANNED_USER: string = '193744073@N04';

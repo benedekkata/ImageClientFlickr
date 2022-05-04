@@ -22,6 +22,9 @@ export class ImageGridItemComponent {
 
   public rows: number = 0;
 
+  /**
+   * Calculates the row height for the responsiveness
+   */
   @HostListener('window:resize')
   calculateRows() {
     this.rows = Math.floor(
@@ -30,8 +33,11 @@ export class ImageGridItemComponent {
     );
   }
 
+  /**
+   * Notifys the parent component of the click event.
+   * @param target the value of the tag
+   */
   tagClicked(target: string): void {
-    console.log('cliked#1');
     this.tagClickedEvent.next(target);
   }
 }

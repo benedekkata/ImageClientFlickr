@@ -25,6 +25,10 @@ export class ImageGridComponent implements OnInit, OnDestroy {
 
   constructor(private media: MediaObserver) {}
 
+  /**
+   * It gets notified from the cild component if one tag element has been clicked, and notifies the image-search-componet.
+   * @param newVal
+   */
   callParentKeywordChange(newVal: string): void {
     this.keywordChangeEvent.next(newVal);
   }
