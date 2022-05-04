@@ -1,0 +1,19 @@
+<mat-card class="search-card">
+    <mat-card-header>
+        <mat-card-title>{{imgOrFav}} from <span class="username">{{username}}</span></mat-card-title>
+    </mat-card-header>
+    <mat-card-content color="primary">
+        <div class="fav-search" *ngIf="imgOrFav === 'Images'" >
+            <h3>See this user's favourite images here: </h3>
+            <button mat-raised-button (click)="getFavImages()" color="primary">Show favourites</button>
+        </div>
+        <div class="fav-search" *ngIf="imgOrFav === 'Favourites'">
+            <h3>See this user's images here: </h3>
+            <button mat-raised-button (click)="getImages()" color="primary">Show images</button>
+        </div>
+        <mat-chip class="goback" [routerLink]="['/']" >For tag search and language fiter go back to the <span class="username">Home page</span></mat-chip>
+    </mat-card-content>
+</mat-card>
+<app-image-grid [images]="images" cols.xs="1" cols.sm="2" cols.md="3"
+    cols.lg="4" cols.xl="6">
+</app-image-grid>

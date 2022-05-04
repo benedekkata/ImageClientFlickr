@@ -1,0 +1,19 @@
+$primary: #673ab7;
+.fav-search{
+    margin-left: 1rem;
+    button{
+        display: inline-block;
+        margin-left: 2rem;
+    }
+    h3{
+        display: inline-block;
+    }
+}
+.username{
+    color: $primary;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+.goback{
+    margin-left: 0.75rem;
+}
