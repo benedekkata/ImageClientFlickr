@@ -1,0 +1,24 @@
+<mat-card class="search-card">
+    <mat-card-header>
+        <mat-card-title>To see images type a keyword & search</mat-card-title>
+    </mat-card-header>
+    <mat-card-content color="primary">
+        <mat-form-field class="keyword-search" appearance="fill">
+            <mat-label>Keyword</mat-label>
+            <input  matInput placeholder="e.g.: Cat" [(ngModel)]="keyword" />
+        </mat-form-field>
+        <mat-form-field class="lang-search" appearance="fill">
+            <mat-label>Lanugage filter</mat-label>
+            <mat-select [(value)]="selected">
+                <mat-option *ngFor="let lang of languages" [value]="lang">
+                    {{lang}}
+                </mat-option>
+            </mat-select>
+            <mat-hint>Based on the values that the users chose for their posts! Be aware that sometimes it is not correct!</mat-hint>
+        </mat-form-field>
+        
+        <button mat-raised-button (click)="getImages()" color="primary">Search</button>
+    </mat-card-content>
+</mat-card>
+<app-image-grid [images]="images" (keywordChangeEvent)="changeKeyword($event)" cols.xs="1" cols.sm="2" cols.md="3" cols.lg="4" cols.xl="6">
+</app-image-grid>

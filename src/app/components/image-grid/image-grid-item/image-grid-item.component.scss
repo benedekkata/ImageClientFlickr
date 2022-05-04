@@ -1,0 +1,32 @@
+$primary: #673ab7;
+$accent: #ffd740;
+:host{
+    padding: 1rem;
+}
+.item-card {
+
+    img {
+        width: 100%;
+    }
+    padding-bottom: 2rem;
+    min-height: 10rem;
+    .bg-primary{
+        background-color: $primary;
+        color: white;
+        padding-top: 1rem;
+        
+    }
+    .text-p{
+        color: $primary;
+        font-weight: 600;
+        font-size: medium;
+        a{
+            margin-left: 0.2rem;
+            text-decoration: none;
+        }
+        
+    }
+    .open-original {
+        margin-top: 1rem;
+    }
+}
